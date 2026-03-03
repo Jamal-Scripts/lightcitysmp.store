@@ -1,117 +1,685 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plans</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui,Arial}
-body{background:#05070d;color:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh}
-.container{width:1200px;max-width:95%;text-align:center}
-.title{font-size:28px;margin-bottom:30px;color:#bfc7ff}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
-.card{background:#0b0f1a;border:1px solid #1b2236;border-radius:16px;padding:26px;display:flex;flex-direction:column;justify-content:space-between;transition:.25s}
-.card:hover{transform:translateY(-4px);border-color:#5b6cff}
-.plan{font-size:20px;margin-bottom:10px}
-.price{font-size:32px;font-weight:700;margin-bottom:18px}
-.price span{font-size:14px;color:#9aa3c7}
-.features{list-style:none;text-align:left;margin-bottom:22px}
-.features li{margin-bottom:8px;color:#cfd6ff;font-size:14px}
-.btn{background:#12182a;border:1px solid #2a3355;color:#fff;padding:12px;border-radius:10px;cursor:pointer;font-weight:600;transition:.2s}
-.btn:hover{background:#5b6cff;border-color:#5b6cff}
-.highlight{border:2px solid #5b6cff}
-</style>
-</head>
-<body>
-<div class="container">
-<div class="title">Powerful, Reliable, and Affordable Minecraft Hosting</div>
-<div class="grid">
+import { useState, useEffect, useRef } from "react";
 
-<div class="card">
-<div>
-<div class="plan">Starter</div>
-<div class="price">$1 <span>/mo</span></div>
-<ul class="features">
-<li>1GB RAM</li>
-<li>Advanced DDoS Protection</li>
-</ul>
-</div>
-<button class="btn">Choose Plan</button>
-</div>
+// ═══════════════════════════════════════════════════════════════
+// ██  LIGHTCITYSMP STORE CONFIG — Edit ranks here!  ██
+// ═══════════════════════════════════════════════════════════════
+const STORE_CONFIG = {
+  serverName: "LightCitySMP",
+  season: "Season 4",
+  tagline: "Power up your survival experience",
+  discordLink: "#", // Replace with your Discord link
+  // Add your server IP or store URL here
+  storeUrl: "#",
 
-<div class="card">
-<div>
-<div class="plan">Starter Plus</div>
-<div class="price">$2.5 <span>/mo</span></div>
-<ul class="features">
-<li>2GB RAM</li>
-<li>Support</li>
-<li>Advanced DDoS Protection</li>
-</ul>
-</div>
-<button class="btn">Choose Plan</button>
-</div>
+  // ── RANKS ──────────────────────────────────────
+  // Add, remove, or edit ranks below.
+  // icon: use any emoji or paste an image URL
+  // features: array of perks included in the rank
+  // color: hex color for the rank's accent
+  // popular: set ONE rank to true to highlight it
+  ranks: [
+    {
+      id: "iron",
+      name: "Iron",
+      icon: "⛏️",
+      price: 4.99,
+      color: "#B0B0B0",
+      popular: false,
+      description: "A solid start for new adventurers. Get essential perks to enhance your gameplay.",
+      features: [
+        "Iron rank prefix in chat",
+        "Access to /hat command",
+        "2 home locations",
+        "Colored chat messages",
+        "Iron kit every 24h",
+      ],
+    },
+    {
+      id: "gold",
+      name: "Gold",
+      icon: "👑",
+      price: 9.99,
+      color: "#FFD700",
+      popular: true,
+      description: "The most popular choice. Unlock powerful perks and stand out from the crowd.",
+      features: [
+        "All Iron perks included",
+        "Gold rank prefix in chat",
+        "5 home locations",
+        "/fly in lobby",
+        "Gold kit every 12h",
+        "Access to /nick command",
+        "Priority queue access",
+      ],
+    },
+    {
+      id: "diamond",
+      name: "Diamond",
+      icon: "💎",
+      price: 19.99,
+      color: "#4FC3F7",
+      popular: false,
+      description: "The ultimate rank. Maximum perks, maximum style, maximum power.",
+      features: [
+        "All Gold perks included",
+        "Diamond rank prefix in chat",
+        "10 home locations",
+        "/fly everywhere",
+        "Diamond kit every 6h",
+        "Custom join message",
+        "Particle effects",
+        "Exclusive diamond trails",
+        "Priority support",
+      ],
+    },
+  ],
+};
+// ═══════════════════════════════════════════════════════════════
 
-<div class="card highlight">
-<div>
-<div class="plan">Pro</div>
-<div class="price">6.5$<span>/mo</span></div>
-<ul class="features">
-<li>6GB RAM</li>
-<li>Daily Backup</li>
-<li>Priority Support</li>
-<li>Advanced DDoS Protection</li>
-</ul>
-</div>
-<button class="btn">Choose Plan</button>
-</div>
+const FONT_URL =
+  "https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600;700;800;900&display=swap";
 
-<div class="card">
-<div>
-<div class="plan">Pro+</div>
-<div class="price">$10$<span>/mo</span></div>
-<ul class="features">
-<li>8GB RAM</li>
-<li>Daily Backup</li>
-<li>Unlimited Slots</li>
-<li>Priority Support</li>
-<li>Advanced DDoS Protection</li>
-</ul>
-</div>
-<button class="btn">Choose Plan</button>
-</div>
+// Particle component
+function Particles() {
+  const canvasRef = useRef(null);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    let animId;
+    let particles = [];
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener("resize", resize);
 
-<div class="card">
-<div>
-<div class="plan">Elite</div>
-<div class="price">$13<span>/mo</span></div>
-<ul class="features">
-<li>12GB RAM</li>
-<li>Daily Backup</li>
-<li>Priority Support</li>
-<li>Dedicated IP</li>
-<li>Advanced DDoS Protection</li>
-</ul>
-</div>
-<button class="btn">Choose Plan</button>
-</div>
+    for (let i = 0; i < 60; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 2 + 0.5,
+        speedY: -(Math.random() * 0.3 + 0.1),
+        speedX: (Math.random() - 0.5) * 0.2,
+        opacity: Math.random() * 0.5 + 0.1,
+      });
+    }
 
-<div class="card">
-<div>
-<div class="plan">Ultimate</div>
-<div class="price">$18<span>/mo</span></div>
-<ul class="features">
-<li>16GB RAM</li>
-<li>Daily Backup</li>
-<li>Dedicated IP</li>
-<li>24/7 Support</li>
-<li>Advanced DDoS Protection</li>
-</ul>
-</div>
-<button class="btn">Choose Plan</button>
-</div>
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p) => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(79, 195, 247, ${p.opacity})`;
+        ctx.fill();
+        p.x += p.speedX;
+        p.y += p.speedY;
+        if (p.y < -10) {
+          p.y = canvas.height + 10;
+          p.x = Math.random() * canvas.width;
+        }
+      });
+      animId = requestAnimationFrame(draw);
+    };
+    draw();
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
+  return (
+    <canvas
+      ref={canvasRef}
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        pointerEvents: "none",
+        zIndex: 1,
+      }}
+    />
+  );
+}
 
-</div>
-</div>
-</body>
-</html>
+// Rank card
+function RankCard({ rank, index }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        position: "relative",
+        display: "flex",
+        flexDirection: "column",
+        background: "rgba(15, 20, 35, 0.85)",
+        border: `1px solid ${rank.popular ? rank.color : "rgba(255,255,255,0.06)"}`,
+        borderRadius: 16,
+        padding: "0",
+        overflow: "hidden",
+        transition: "all 0.4s cubic-bezier(0.23, 1, 0.32, 1)",
+        transform: hovered ? "translateY(-8px) scale(1.02)" : "translateY(0) scale(1)",
+        boxShadow: hovered
+          ? `0 20px 60px rgba(0,0,0,0.5), 0 0 40px ${rank.color}22`
+          : "0 4px 20px rgba(0,0,0,0.3)",
+        animation: `fadeSlideUp 0.6s ease ${index * 0.15}s both`,
+        flex: "1 1 320px",
+        maxWidth: 400,
+        minWidth: 280,
+      }}
+    >
+      {rank.popular && (
+        <div
+          style={{
+            position: "absolute",
+            top: 16,
+            right: -30,
+            background: rank.color,
+            color: "#000",
+            fontSize: 11,
+            fontWeight: 700,
+            padding: "4px 36px",
+            transform: "rotate(45deg)",
+            fontFamily: "'Chakra Petch', sans-serif",
+            textTransform: "uppercase",
+            letterSpacing: 1.5,
+            zIndex: 2,
+          }}
+        >
+          Popular
+        </div>
+      )}
+
+      {/* Top glow line */}
+      <div
+        style={{
+          height: 3,
+          background: `linear-gradient(90deg, transparent, ${rank.color}, transparent)`,
+          opacity: hovered ? 1 : 0.5,
+          transition: "opacity 0.3s",
+        }}
+      />
+
+      {/* Header */}
+      <div style={{ padding: "32px 28px 0", textAlign: "center" }}>
+        <div
+          style={{
+            fontSize: 48,
+            marginBottom: 12,
+            filter: hovered ? `drop-shadow(0 0 12px ${rank.color}88)` : "none",
+            transition: "filter 0.3s",
+          }}
+        >
+          {rank.icon.startsWith("http") ? (
+            <img
+              src={rank.icon}
+              alt={rank.name}
+              style={{ width: 48, height: 48, objectFit: "contain" }}
+            />
+          ) : (
+            rank.icon
+          )}
+        </div>
+        <h3
+          style={{
+            fontFamily: "'Exo 2', sans-serif",
+            fontSize: 26,
+            fontWeight: 800,
+            color: rank.color,
+            margin: 0,
+            textTransform: "uppercase",
+            letterSpacing: 3,
+          }}
+        >
+          {rank.name}
+        </h3>
+        <p
+          style={{
+            fontFamily: "'Chakra Petch', sans-serif",
+            color: "rgba(255,255,255,0.5)",
+            fontSize: 13,
+            lineHeight: 1.6,
+            marginTop: 10,
+            minHeight: 40,
+          }}
+        >
+          {rank.description}
+        </p>
+      </div>
+
+      {/* Price */}
+      <div style={{ textAlign: "center", padding: "20px 28px" }}>
+        <span
+          style={{
+            fontFamily: "'Exo 2', sans-serif",
+            fontSize: 42,
+            fontWeight: 900,
+            color: "#fff",
+            letterSpacing: -1,
+          }}
+        >
+          ${rank.price.toFixed(2)}
+        </span>
+        <span
+          style={{
+            fontFamily: "'Chakra Petch', sans-serif",
+            fontSize: 14,
+            color: "rgba(255,255,255,0.35)",
+            marginLeft: 4,
+          }}
+        >
+          USD
+        </span>
+      </div>
+
+      {/* Divider */}
+      <div
+        style={{
+          height: 1,
+          margin: "0 28px",
+          background: `linear-gradient(90deg, transparent, ${rank.color}33, transparent)`,
+        }}
+      />
+
+      {/* Features */}
+      <div style={{ padding: "20px 28px", flex: 1 }}>
+        {rank.features.map((f, i) => (
+          <div
+            key={i}
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: 10,
+              marginBottom: 10,
+              fontFamily: "'Chakra Petch', sans-serif",
+              fontSize: 13.5,
+              color: "rgba(255,255,255,0.7)",
+              lineHeight: 1.4,
+            }}
+          >
+            <span style={{ color: rank.color, fontSize: 14, flexShrink: 0, marginTop: 1 }}>
+              ✦
+            </span>
+            {f}
+          </div>
+        ))}
+      </div>
+
+      {/* Button */}
+      <div style={{ padding: "0 28px 28px" }}>
+        <button
+          style={{
+            width: "100%",
+            padding: "14px 0",
+            background: rank.popular
+              ? `linear-gradient(135deg, ${rank.color}, ${rank.color}CC)`
+              : "transparent",
+            border: rank.popular ? "none" : `1.5px solid ${rank.color}88`,
+            borderRadius: 10,
+            color: rank.popular ? "#000" : rank.color,
+            fontFamily: "'Exo 2', sans-serif",
+            fontSize: 15,
+            fontWeight: 700,
+            textTransform: "uppercase",
+            letterSpacing: 2,
+            cursor: "pointer",
+            transition: "all 0.3s",
+            boxShadow: rank.popular ? `0 4px 20px ${rank.color}44` : "none",
+          }}
+          onMouseOver={(e) => {
+            if (!rank.popular) {
+              e.target.style.background = `${rank.color}18`;
+            }
+          }}
+          onMouseOut={(e) => {
+            if (!rank.popular) {
+              e.target.style.background = "transparent";
+            }
+          }}
+        >
+          Purchase Rank
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default function LightCitySMPStore() {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const link = document.createElement("link");
+    link.href = FONT_URL;
+    link.rel = "stylesheet";
+    document.head.appendChild(link);
+
+    const style = document.createElement("style");
+    style.textContent = `
+      @keyframes fadeSlideUp {
+        from { opacity: 0; transform: translateY(40px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes glow {
+        0%, 100% { text-shadow: 0 0 20px rgba(79,195,247,0.3), 0 0 40px rgba(79,195,247,0.1); }
+        50% { text-shadow: 0 0 30px rgba(79,195,247,0.5), 0 0 60px rgba(79,195,247,0.2); }
+      }
+      @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+      }
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-6px); }
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { background: #070B14; }
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: #0a0e1a; }
+      ::-webkit-scrollbar-thumb { background: #1a2040; border-radius: 3px; }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(link);
+      document.head.removeChild(style);
+    };
+  }, []);
+
+  return (
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "linear-gradient(180deg, #070B14 0%, #0D1225 30%, #0A0F1E 70%, #070B14 100%)",
+        color: "#fff",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      <Particles />
+
+      {/* Background decoration */}
+      <div
+        style={{
+          position: "fixed",
+          top: "-30%",
+          left: "-10%",
+          width: "50%",
+          height: "60%",
+          background: "radial-gradient(ellipse, rgba(79,195,247,0.03) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }}
+      />
+      <div
+        style={{
+          position: "fixed",
+          bottom: "-20%",
+          right: "-10%",
+          width: "50%",
+          height: "50%",
+          background: "radial-gradient(ellipse, rgba(255,215,0,0.02) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* NAV */}
+      <nav
+        style={{
+          position: "relative",
+          zIndex: 10,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "20px 40px",
+          borderBottom: "1px solid rgba(255,255,255,0.04)",
+          backdropFilter: "blur(10px)",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div
+            style={{
+              width: 36,
+              height: 36,
+              borderRadius: 8,
+              background: "linear-gradient(135deg, #4FC3F7, #FFD700)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 18,
+            }}
+          >
+            ⚡
+          </div>
+          <span
+            style={{
+              fontFamily: "'Exo 2', sans-serif",
+              fontSize: 18,
+              fontWeight: 800,
+              letterSpacing: 2,
+              textTransform: "uppercase",
+            }}
+          >
+            {STORE_CONFIG.serverName}
+          </span>
+          <span
+            style={{
+              fontFamily: "'Chakra Petch', sans-serif",
+              fontSize: 11,
+              color: "#4FC3F7",
+              background: "rgba(79,195,247,0.1)",
+              padding: "3px 10px",
+              borderRadius: 20,
+              fontWeight: 600,
+              letterSpacing: 1,
+            }}
+          >
+            {STORE_CONFIG.season}
+          </span>
+        </div>
+        <a
+          href={STORE_CONFIG.discordLink}
+          style={{
+            fontFamily: "'Chakra Petch', sans-serif",
+            fontSize: 13,
+            color: "rgba(255,255,255,0.5)",
+            textDecoration: "none",
+            padding: "8px 20px",
+            border: "1px solid rgba(255,255,255,0.08)",
+            borderRadius: 8,
+            transition: "all 0.3s",
+          }}
+          onMouseOver={(e) => {
+            e.target.style.borderColor = "rgba(255,255,255,0.2)";
+            e.target.style.color = "#fff";
+          }}
+          onMouseOut={(e) => {
+            e.target.style.borderColor = "rgba(255,255,255,0.08)";
+            e.target.style.color = "rgba(255,255,255,0.5)";
+          }}
+        >
+          Discord
+        </a>
+      </nav>
+
+      {/* HERO */}
+      <div
+        style={{
+          position: "relative",
+          zIndex: 5,
+          textAlign: "center",
+          padding: "80px 20px 20px",
+        }}
+      >
+        <div
+          style={{
+            fontFamily: "'Chakra Petch', sans-serif",
+            fontSize: 12,
+            fontWeight: 600,
+            color: "#4FC3F7",
+            textTransform: "uppercase",
+            letterSpacing: 6,
+            marginBottom: 20,
+            animation: "fadeSlideUp 0.6s ease both",
+          }}
+        >
+          Official Store
+        </div>
+        <h1
+          style={{
+            fontFamily: "'Exo 2', sans-serif",
+            fontSize: "clamp(36px, 6vw, 72px)",
+            fontWeight: 900,
+            lineHeight: 1.1,
+            textTransform: "uppercase",
+            letterSpacing: 4,
+            animation: "fadeSlideUp 0.6s ease 0.1s both, glow 3s ease-in-out infinite",
+            background: "linear-gradient(135deg, #fff 30%, #4FC3F7 70%, #FFD700)",
+            backgroundSize: "200% auto",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}
+        >
+          Choose Your Rank
+        </h1>
+        <p
+          style={{
+            fontFamily: "'Chakra Petch', sans-serif",
+            fontSize: 16,
+            color: "rgba(255,255,255,0.4)",
+            maxWidth: 480,
+            margin: "16px auto 0",
+            lineHeight: 1.6,
+            animation: "fadeSlideUp 0.6s ease 0.2s both",
+          }}
+        >
+          {STORE_CONFIG.tagline}
+        </p>
+      </div>
+
+      {/* RANK CARDS */}
+      <div
+        style={{
+          position: "relative",
+          zIndex: 5,
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          gap: 24,
+          padding: "50px 24px 80px",
+          maxWidth: 1300,
+          margin: "0 auto",
+        }}
+      >
+        {STORE_CONFIG.ranks.map((rank, i) => (
+          <RankCard key={rank.id} rank={rank} index={i} />
+        ))}
+      </div>
+
+      {/* FAQ / INFO */}
+      <div
+        style={{
+          position: "relative",
+          zIndex: 5,
+          maxWidth: 700,
+          margin: "0 auto",
+          padding: "0 24px 100px",
+          textAlign: "center",
+        }}
+      >
+        <div
+          style={{
+            height: 1,
+            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)",
+            marginBottom: 60,
+          }}
+        />
+        <h2
+          style={{
+            fontFamily: "'Exo 2', sans-serif",
+            fontSize: 22,
+            fontWeight: 700,
+            marginBottom: 20,
+            letterSpacing: 2,
+            textTransform: "uppercase",
+            color: "rgba(255,255,255,0.8)",
+          }}
+        >
+          How It Works
+        </h2>
+        {[
+          { step: "01", title: "Choose your rank", desc: "Pick the rank that fits your playstyle" },
+          { step: "02", title: "Complete payment", desc: "Secure checkout via our payment provider" },
+          { step: "03", title: "Get your perks", desc: "Rank applied automatically — start playing!" },
+        ].map((item, i) => (
+          <div
+            key={i}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 20,
+              padding: "16px 0",
+              borderBottom: "1px solid rgba(255,255,255,0.03)",
+              textAlign: "left",
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "'Exo 2', sans-serif",
+                fontSize: 28,
+                fontWeight: 900,
+                color: "rgba(79,195,247,0.15)",
+                minWidth: 50,
+              }}
+            >
+              {item.step}
+            </span>
+            <div>
+              <div
+                style={{
+                  fontFamily: "'Exo 2', sans-serif",
+                  fontWeight: 700,
+                  fontSize: 15,
+                  color: "rgba(255,255,255,0.85)",
+                  marginBottom: 2,
+                }}
+              >
+                {item.title}
+              </div>
+              <div
+                style={{
+                  fontFamily: "'Chakra Petch', sans-serif",
+                  fontSize: 13,
+                  color: "rgba(255,255,255,0.35)",
+                }}
+              >
+                {item.desc}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* FOOTER */}
+      <footer
+        style={{
+          position: "relative",
+          zIndex: 5,
+          borderTop: "1px solid rgba(255,255,255,0.04)",
+          padding: "24px 40px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          fontFamily: "'Chakra Petch', sans-serif",
+          fontSize: 12,
+          color: "rgba(255,255,255,0.25)",
+        }}
+      >
+        <span>© 2026 {STORE_CONFIG.serverName}. All rights reserved.</span>
+        <span>Not affiliated with Mojang Studios</span>
+      </footer>
+    </div>
+  );
+}
