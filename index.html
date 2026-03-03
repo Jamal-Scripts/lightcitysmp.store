@@ -3,397 +3,396 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LightCitySMP Store — Season 4</title>
+<title>LightCitySMP — Store</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════════════════
-   LIGHTCITYSMP STORE — CSS
-   ═══════════════════════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --iron: #B0B0B0;
-  --gold: #FFD700;
-  --diamond: #4FC3F7;
-  --bg-dark: #070B14;
-  --bg-card: rgba(15, 20, 35, 0.85);
+  --surface: #111116;
+  --surface-2: #18181f;
+  --surface-3: #1f1f28;
+  --border: #2a2a35;
+  --text: #e8e6e3;
+  --text-dim: #7a7880;
+  --text-dimmer: #4e4d52;
+  --accent: #e8c44a;
+  --accent-dim: #e8c44a33;
 }
 
+html { scroll-behavior: smooth; }
+
 body {
-  background: linear-gradient(180deg, #070B14 0%, #0D1225 30%, #0A0F1E 70%, #070B14 100%);
-  color: #fff;
-  font-family: 'Chakra Petch', sans-serif;
-  min-height: 100vh;
+  background: var(--surface);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #0a0e1a; }
-::-webkit-scrollbar-thumb { background: #1a2040; border-radius: 3px; }
+::selection { background: var(--accent); color: #000; }
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--surface); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
-/* PARTICLES CANVAS */
-#particles {
-  position: fixed; top: 0; left: 0;
-  width: 100%; height: 100%;
-  pointer-events: none; z-index: 1;
-}
-
-/* BG BLOBS */
-.bg-blob {
-  position: fixed; pointer-events: none; border-radius: 50%;
-}
-.bg-blob-1 {
-  top: -30%; left: -10%; width: 50%; height: 60%;
-  background: radial-gradient(ellipse, rgba(79,195,247,0.03) 0%, transparent 70%);
-}
-.bg-blob-2 {
-  bottom: -20%; right: -10%; width: 50%; height: 50%;
-  background: radial-gradient(ellipse, rgba(255,215,0,0.02) 0%, transparent 70%);
-}
+a { color: inherit; text-decoration: none; }
 
 /* NAV */
-nav {
-  position: relative; z-index: 10;
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 20px 40px;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  backdrop-filter: blur(10px);
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px; height: 56px;
+  background: rgba(17,17,22,0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
 }
-.nav-brand {
-  display: flex; align-items: center; gap: 12px;
+.topbar-left { display: flex; align-items: center; gap: 16px; }
+.server-name {
+  font-family: 'Anybody', sans-serif;
+  font-weight: 800; font-size: 15px;
+  letter-spacing: 0.5px;
 }
-.nav-logo {
-  width: 36px; height: 36px; border-radius: 8px;
-  background: linear-gradient(135deg, #4FC3F7, #FFD700);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px;
+.server-tag {
+  font-size: 10px; font-weight: 600;
+  color: var(--accent);
+  border: 1px solid var(--accent-dim);
+  padding: 2px 8px; border-radius: 3px;
+  text-transform: uppercase; letter-spacing: 1px;
 }
-.nav-title {
-  font-family: 'Exo 2', sans-serif;
-  font-size: 18px; font-weight: 800;
-  letter-spacing: 2px; text-transform: uppercase;
+.topbar-links { display: flex; gap: 6px; }
+.topbar-links a {
+  font-size: 13px; font-weight: 500;
+  color: var(--text-dim); padding: 6px 14px;
+  border-radius: 6px; transition: all 0.2s;
 }
-.nav-season {
-  font-size: 11px; color: #4FC3F7;
-  background: rgba(79,195,247,0.1);
-  padding: 3px 10px; border-radius: 20px;
-  font-weight: 600; letter-spacing: 1px;
-}
-.nav-discord {
-  font-size: 13px; color: rgba(255,255,255,0.5);
-  text-decoration: none; padding: 8px 20px;
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 8px; transition: all 0.3s;
-}
-.nav-discord:hover {
-  border-color: rgba(255,255,255,0.2); color: #fff;
-}
+.topbar-links a:hover { color: var(--text); background: var(--surface-3); }
+.topbar-links a.active { color: var(--accent); }
 
 /* HERO */
 .hero {
-  position: relative; z-index: 5;
-  text-align: center; padding: 80px 20px 20px;
+  padding: 72px 32px 40px;
+  max-width: 680px;
 }
-.hero-label {
-  font-size: 12px; font-weight: 600; color: #4FC3F7;
-  text-transform: uppercase; letter-spacing: 6px; margin-bottom: 20px;
-  animation: fadeSlideUp 0.6s ease both;
+.hero-eyebrow {
+  font-size: 11px; font-weight: 600;
+  color: var(--text-dimmer);
+  text-transform: uppercase; letter-spacing: 3px;
+  margin-bottom: 14px;
 }
-.hero-title {
-  font-family: 'Exo 2', sans-serif;
-  font-size: clamp(36px, 6vw, 72px);
+.hero h1 {
+  font-family: 'Anybody', sans-serif;
+  font-size: clamp(32px, 5vw, 48px);
   font-weight: 900; line-height: 1.1;
-  text-transform: uppercase; letter-spacing: 4px;
-  background: linear-gradient(135deg, #fff 30%, #4FC3F7 70%, #FFD700);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: fadeSlideUp 0.6s ease 0.1s both, glow 3s ease-in-out infinite;
+  margin-bottom: 14px;
 }
-.hero-sub {
-  font-size: 16px; color: rgba(255,255,255,0.4);
-  max-width: 480px; margin: 16px auto 0; line-height: 1.6;
-  animation: fadeSlideUp 0.6s ease 0.2s both;
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero p {
+  font-size: 15px; color: var(--text-dim);
+  line-height: 1.6; max-width: 440px;
 }
 
-/* CARDS GRID */
-.cards-grid {
-  position: relative; z-index: 5;
-  display: flex; flex-wrap: wrap; justify-content: center;
-  gap: 24px; padding: 50px 24px 80px;
-  max-width: 1300px; margin: 0 auto;
+/* SECTION TABS */
+.section-tabs {
+  display: flex; gap: 2px;
+  padding: 0 32px; margin-bottom: 40px;
+  border-bottom: 1px solid var(--border);
+}
+.section-tab {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 600;
+  color: var(--text-dim);
+  padding: 12px 20px;
+  border: none; border-bottom: 2px solid transparent;
+  background: none; cursor: pointer;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  transition: all 0.2s;
+}
+.section-tab:hover { color: var(--text); }
+.section-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* SECTION */
+.section-wrap {
+  padding: 0 32px 60px;
+  max-width: 1200px;
+}
+.section-label {
+  font-family: 'Anybody', sans-serif;
+  font-size: 20px; font-weight: 800;
+  margin-bottom: 6px;
+}
+.section-desc {
+  font-size: 13px; color: var(--text-dim);
+  margin-bottom: 28px;
 }
 
-/* RANK CARD */
+/* RANKS GRID */
+.ranks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
 .rank-card {
-  position: relative; display: flex; flex-direction: column;
-  background: var(--bg-card);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 16px; overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-  flex: 1 1 320px; max-width: 400px; min-width: 280px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-  opacity: 0; animation: fadeSlideUp 0.6s ease forwards;
-}
-.rank-card:nth-child(1) { animation-delay: 0s; }
-.rank-card:nth-child(2) { animation-delay: 0.15s; }
-.rank-card:nth-child(3) { animation-delay: 0.3s; }
-.rank-card:nth-child(4) { animation-delay: 0.45s; }
-.rank-card:nth-child(5) { animation-delay: 0.6s; }
-.rank-card:nth-child(6) { animation-delay: 0.75s; }
-
-.rank-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-}
-.rank-card.is-popular {
-  border-color: var(--accent);
-}
-
-/* Popular badge */
-.popular-badge {
-  position: absolute; top: 16px; right: -30px;
-  background: var(--accent); color: #000;
-  font-size: 11px; font-weight: 700;
-  padding: 4px 36px; transform: rotate(45deg);
-  font-family: 'Chakra Petch', sans-serif;
-  text-transform: uppercase; letter-spacing: 1.5px; z-index: 2;
-}
-
-/* Top glow */
-.card-glow {
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  opacity: 0.5; transition: opacity 0.3s;
-}
-.rank-card:hover .card-glow { opacity: 1; }
-
-/* Card header */
-.card-header {
-  padding: 32px 28px 0; text-align: center;
-}
-.card-icon {
-  font-size: 48px; margin-bottom: 12px;
-  transition: filter 0.3s;
-}
-.card-icon img { width: 48px; height: 48px; object-fit: contain; }
-.rank-card:hover .card-icon {
-  filter: drop-shadow(0 0 12px var(--accent-alpha));
-}
-.card-name {
-  font-family: 'Exo 2', sans-serif;
-  font-size: 26px; font-weight: 800;
-  color: var(--accent); text-transform: uppercase; letter-spacing: 3px;
-}
-.card-desc {
-  color: rgba(255,255,255,0.5); font-size: 13px;
-  line-height: 1.6; margin-top: 10px; min-height: 40px;
-}
-
-/* Price */
-.card-price {
-  text-align: center; padding: 20px 28px;
-}
-.price-amount {
-  font-family: 'Exo 2', sans-serif;
-  font-size: 42px; font-weight: 900; color: #fff; letter-spacing: -1px;
-}
-.price-currency {
-  font-size: 14px; color: rgba(255,255,255,0.35); margin-left: 4px;
-}
-
-/* Divider */
-.card-divider {
-  height: 1px; margin: 0 28px;
-  background: linear-gradient(90deg, transparent, var(--accent-dim), transparent);
-}
-
-/* Features */
-.card-features {
-  padding: 20px 28px; flex: 1;
-}
-.feature-item {
-  display: flex; align-items: flex-start; gap: 10px;
-  margin-bottom: 10px; font-size: 13.5px;
-  color: rgba(255,255,255,0.7); line-height: 1.4;
-}
-.feature-dot {
-  color: var(--accent); font-size: 14px; flex-shrink: 0; margin-top: 1px;
-}
-
-/* Button */
-.card-btn-wrap { padding: 0 28px 28px; }
-.card-btn {
-  width: 100%; padding: 14px 0;
+  position: relative;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
   border-radius: 10px;
-  font-family: 'Exo 2', sans-serif;
-  font-size: 15px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 2px;
-  cursor: pointer; transition: all 0.3s; border: none;
+  overflow: hidden;
+  transition: border-color 0.25s, transform 0.25s;
 }
-.card-btn.outline {
-  background: transparent;
-  border: 1.5px solid var(--accent-dim);
-  color: var(--accent);
+.rank-card:hover {
+  border-color: var(--card-accent, var(--border));
+  transform: translateY(-2px);
 }
-.card-btn.outline:hover {
-  background: rgba(255,255,255,0.04);
+.rank-card-top {
+  height: 4px;
+  background: var(--card-accent, var(--border));
+  opacity: 0.6; transition: opacity 0.25s;
 }
-.card-btn.filled {
-  background: linear-gradient(135deg, var(--accent), var(--accent-cc));
-  color: #000;
-  box-shadow: 0 4px 20px var(--accent-shadow);
+.rank-card:hover .rank-card-top { opacity: 1; }
+.rank-card-body { padding: 24px; }
+.rank-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 6px;
+}
+.rank-icon { font-size: 28px; line-height: 1; }
+.rank-icon img { width: 28px; height: 28px; object-fit: contain; }
+.rank-name {
+  font-family: 'Anybody', sans-serif;
+  font-size: 18px; font-weight: 800;
+  color: var(--card-accent, var(--text));
+}
+.rank-pop {
+  font-size: 9px; font-weight: 700;
+  background: var(--card-accent); color: #000;
+  padding: 2px 7px; border-radius: 3px;
+  text-transform: uppercase; letter-spacing: 0.8px;
+  margin-left: auto;
+}
+.rank-desc {
+  font-size: 13px; color: var(--text-dim);
+  line-height: 1.5; margin-bottom: 20px;
+}
+.rank-features {
+  display: flex; flex-direction: column; gap: 8px;
+  margin-bottom: 24px; padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.rank-feat {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--text-dim);
+}
+.rank-feat::before {
+  content: ''; width: 5px; height: 5px;
+  border-radius: 50%; flex-shrink: 0;
+  background: var(--card-accent, var(--text-dimmer));
+}
+.rank-bottom {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.rank-price {
+  font-family: 'Anybody', sans-serif;
+  font-size: 28px; font-weight: 900;
+}
+.rank-price small {
+  font-size: 13px; font-weight: 400;
+  color: var(--text-dimmer); margin-left: 2px;
+}
+.rank-buy {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 600;
+  padding: 10px 22px; border-radius: 7px;
+  border: none; cursor: pointer; transition: all 0.2s;
+}
+.rank-buy.filled {
+  background: var(--card-accent); color: #000;
+}
+.rank-buy.filled:hover { filter: brightness(1.15); }
+.rank-buy.ghost {
+  background: transparent; color: var(--text-dim);
+  border: 1px solid var(--border);
+}
+.rank-buy.ghost:hover {
+  border-color: var(--card-accent, var(--text-dim));
+  color: var(--text);
 }
 
-/* HOW IT WORKS */
-.how-section {
-  position: relative; z-index: 5;
-  max-width: 700px; margin: 0 auto;
-  padding: 0 24px 100px; text-align: center;
+/* CRATES GRID */
+.crates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
 }
-.section-line {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
-  margin-bottom: 60px;
+.crate-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 10px; padding: 24px;
+  transition: border-color 0.25s, transform 0.25s;
+  display: flex; flex-direction: column;
 }
-.section-title {
-  font-family: 'Exo 2', sans-serif;
-  font-size: 22px; font-weight: 700; margin-bottom: 20px;
-  letter-spacing: 2px; text-transform: uppercase;
-  color: rgba(255,255,255,0.8);
+.crate-card:hover {
+  border-color: var(--crate-color, var(--border));
+  transform: translateY(-2px);
 }
-.step {
-  display: flex; align-items: center; gap: 20px;
-  padding: 16px 0; text-align: left;
-  border-bottom: 1px solid rgba(255,255,255,0.03);
+.crate-top-row {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 10px;
 }
-.step-num {
-  font-family: 'Exo 2', sans-serif;
-  font-size: 28px; font-weight: 900;
-  color: rgba(79,195,247,0.15); min-width: 50px;
+.crate-icon { font-size: 32px; line-height: 1; }
+.crate-icon img { width: 32px; height: 32px; object-fit: contain; }
+.crate-name {
+  font-family: 'Anybody', sans-serif;
+  font-size: 16px; font-weight: 800;
+  color: var(--crate-color, var(--text));
 }
-.step-title {
-  font-family: 'Exo 2', sans-serif;
-  font-weight: 700; font-size: 15px;
-  color: rgba(255,255,255,0.85); margin-bottom: 2px;
+.crate-desc {
+  font-size: 13px; color: var(--text-dim);
+  line-height: 1.5; margin-bottom: 16px; flex: 1;
 }
-.step-desc {
-  font-size: 13px; color: rgba(255,255,255,0.35);
+.crate-loot-label {
+  font-size: 10px; font-weight: 700;
+  color: var(--text-dimmer);
+  text-transform: uppercase; letter-spacing: 1.5px;
+  margin-bottom: 8px;
+}
+.crate-items {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 20px;
+}
+.crate-item {
+  font-size: 11px; font-weight: 500;
+  color: var(--text-dim);
+  background: var(--surface-3);
+  padding: 4px 10px; border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.03);
+}
+.crate-bottom {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 16px; border-top: 1px solid var(--border);
+}
+.crate-price {
+  font-family: 'Anybody', sans-serif;
+  font-size: 22px; font-weight: 900;
+}
+.crate-price small {
+  font-size: 12px; font-weight: 400;
+  color: var(--text-dimmer); margin-left: 2px;
+}
+.crate-buy {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 600;
+  padding: 8px 18px; border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent; color: var(--text-dim);
+  cursor: pointer; transition: all 0.2s;
+}
+.crate-buy:hover {
+  border-color: var(--crate-color, var(--text-dim));
+  color: var(--text);
 }
 
 /* FOOTER */
-footer {
-  position: relative; z-index: 5;
-  border-top: 1px solid rgba(255,255,255,0.04);
-  padding: 24px 40px;
-  display: flex; justify-content: space-between; align-items: center;
-  font-size: 12px; color: rgba(255,255,255,0.25);
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 32px;
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: var(--text-dimmer);
 }
 
-/* ANIMATIONS */
-@keyframes fadeSlideUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
+/* FADE */
+.fade-in {
+  opacity: 0; transform: translateY(12px);
+  animation: fadeIn 0.4s ease forwards;
 }
-@keyframes glow {
-  0%, 100% { text-shadow: 0 0 20px rgba(79,195,247,0.3), 0 0 40px rgba(79,195,247,0.1); }
-  50% { text-shadow: 0 0 30px rgba(79,195,247,0.5), 0 0 60px rgba(79,195,247,0.2); }
-}
+@keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
 
-/* RESPONSIVE */
-@media (max-width: 600px) {
-  nav { padding: 16px 20px; }
-  .nav-title { font-size: 14px; }
-  .hero { padding: 50px 16px 10px; }
-  .cards-grid { padding: 30px 16px 60px; }
-  footer { flex-direction: column; gap: 8px; text-align: center; padding: 20px; }
+/* MOBILE */
+@media (max-width: 640px) {
+  .topbar { padding: 0 16px; }
+  .topbar-links a { padding: 6px 10px; font-size: 12px; }
+  .hero { padding: 48px 16px 28px; }
+  .section-tabs { padding: 0 16px; overflow-x: auto; }
+  .section-wrap { padding: 0 16px 48px; }
+  .ranks-grid, .crates-grid { grid-template-columns: 1fr; }
+  .site-footer { flex-direction: column; gap: 6px; padding: 20px 16px; text-align: center; }
 }
 </style>
 </head>
 <body>
 
-<div class="bg-blob bg-blob-1"></div>
-<div class="bg-blob bg-blob-2"></div>
-<canvas id="particles"></canvas>
-
-<!-- NAV -->
-<nav>
-  <div class="nav-brand">
-    <div class="nav-logo">⚡</div>
-    <span class="nav-title" id="navServerName"></span>
-    <span class="nav-season" id="navSeason"></span>
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="server-name" id="navName"></span>
+    <span class="server-tag" id="navTag"></span>
   </div>
-  <a href="#" class="nav-discord" id="navDiscord">Discord</a>
-</nav>
+  <div class="topbar-links">
+    <a href="#" class="active" data-tab="ranks">Ranks</a>
+    <a href="#" data-tab="crates">Crates</a>
+    <a href="#" id="discordLink" target="_blank">Discord</a>
+  </div>
+</div>
 
-<!-- HERO -->
 <div class="hero">
-  <div class="hero-label">Official Store</div>
-  <h1 class="hero-title">Choose Your Rank</h1>
-  <p class="hero-sub" id="heroTagline"></p>
+  <div class="hero-eyebrow" id="heroEyebrow"></div>
+  <h1 id="heroTitle"></h1>
+  <p id="heroSub"></p>
 </div>
 
-<!-- RANK CARDS -->
-<div class="cards-grid" id="cardsGrid"></div>
-
-<!-- HOW IT WORKS -->
-<div class="how-section">
-  <div class="section-line"></div>
-  <h2 class="section-title">How It Works</h2>
-  <div class="step">
-    <span class="step-num">01</span>
-    <div><div class="step-title">Choose your rank</div><div class="step-desc">Pick the rank that fits your playstyle</div></div>
-  </div>
-  <div class="step">
-    <span class="step-num">02</span>
-    <div><div class="step-title">Complete payment</div><div class="step-desc">Secure checkout via our payment provider</div></div>
-  </div>
-  <div class="step">
-    <span class="step-num">03</span>
-    <div><div class="step-title">Get your perks</div><div class="step-desc">Rank applied automatically — start playing!</div></div>
-  </div>
+<div class="section-tabs" id="sectionTabs">
+  <button class="section-tab active" data-section="ranks">Ranks</button>
+  <button class="section-tab" data-section="crates">Crates</button>
 </div>
 
-<!-- FOOTER -->
-<footer>
-  <span id="footerCopy"></span>
+<div class="section-wrap" id="ranksSection">
+  <div class="section-label">Ranks</div>
+  <div class="section-desc">Permanent upgrades that stick with you all season.</div>
+  <div class="ranks-grid" id="ranksGrid"></div>
+</div>
+
+<div class="section-wrap" id="cratesSection" style="display:none;">
+  <div class="section-label">Crates</div>
+  <div class="section-desc">Try your luck — keys are applied to your account instantly.</div>
+  <div class="crates-grid" id="cratesGrid"></div>
+</div>
+
+<div class="site-footer">
+  <span id="footerText"></span>
   <span>Not affiliated with Mojang Studios</span>
-</footer>
+</div>
 
 <script>
 // ═══════════════════════════════════════════════════════════════════
-// ██  LIGHTCITYSMP STORE CONFIG 
+//  LIGHTCITYSMP STORE CONFIG — Edit everything here
 // ═══════════════════════════════════════════════════════════════════
-const STORE_CONFIG = {
+
+const CONFIG = {
+
+  // ── General ────────────────────────────────────────────────
   serverName: "LightCitySMP",
   season: "Season 4",
-  tagline: "Power up your survival experience",
-  discordLink: "#",           // Replace with your Discord invite link
-  storeUrl: "#",              // Replace with your store/checkout URL
+  heroTitle: 'Server <em>Store</em>',      // wrap text in <em> for accent color
+  heroSub: "Grab a rank or try your luck with crates. All purchases are applied instantly.",
+  discordLink: "#",                         // your Discord invite URL
 
-  // ── RANKS ──────────────────────────────────────────────────────
-  // To add a new rank: copy one of the objects below and edit it.
-  // icon: use any emoji OR an image URL like "https://example.com/icon.png"
-  // color: hex color for the rank's accent theme
-  // popular: set ONE rank to true to give it the "Popular" ribbon
-  // features: array of perk strings
+  // ── Ranks ──────────────────────────────────────────────────
+  // icon: emoji OR image URL ("https://...")
+  // color: hex accent color for the card
+  // popular: set one rank to true for the badge (or none)
   ranks: [
     {
       id: "iron",
       name: "Iron",
-      icon: "⛏️",                         // emoji or image URL
+      icon: "⛏️",
       price: 4.99,
-      color: "#B0B0B0",
+      color: "#a0a0a0",
       popular: false,
-      description: "A solid start for new adventurers. Get essential perks to enhance your gameplay.",
+      description: "Essential perks for a head start. Clean and simple.",
       features: [
-        "Iron rank prefix in chat",
-        "Access to /hat command",
+        "Iron chat prefix",
+        "/hat command",
         "2 home locations",
-        "Colored chat messages",
-        "Iron kit every 24h",
+        "Colored chat",
+        "Iron kit (24h cooldown)",
       ],
     },
     {
@@ -401,17 +400,17 @@ const STORE_CONFIG = {
       name: "Gold",
       icon: "👑",
       price: 9.99,
-      color: "#FFD700",
+      color: "#e8c44a",
       popular: true,
-      description: "The most popular choice. Unlock powerful perks and stand out from the crowd.",
+      description: "The go-to pick. More homes, more commands, priority access.",
       features: [
-        "All Iron perks included",
-        "Gold rank prefix in chat",
+        "Everything in Iron",
+        "Gold chat prefix",
         "5 home locations",
         "/fly in lobby",
-        "Gold kit every 12h",
-        "Access to /nick command",
-        "Priority queue access",
+        "Gold kit (12h cooldown)",
+        "/nick command",
+        "Priority queue",
       ],
     },
     {
@@ -419,136 +418,141 @@ const STORE_CONFIG = {
       name: "Diamond",
       icon: "💎",
       price: 19.99,
-      color: "#4FC3F7",
+      color: "#5cb8e4",
       popular: false,
-      description: "The ultimate rank. Maximum perks, maximum style, maximum power.",
+      description: "Full access. Fly anywhere, custom trails, the works.",
       features: [
-        "All Gold perks included",
-        "Diamond rank prefix in chat",
+        "Everything in Gold",
+        "Diamond chat prefix",
         "10 home locations",
         "/fly everywhere",
-        "Diamond kit every 6h",
+        "Diamond kit (6h cooldown)",
         "Custom join message",
-        "Particle effects",
-        "Exclusive diamond trails",
+        "Particle effects & trails",
         "Priority support",
       ],
     },
-    // ── ADD MORE RANKS BELOW ──────────────────────────────────
-    // {
-    //   id: "emerald",
-    //   name: "Emerald",
-    //   icon: "🟢",               // or "https://yoursite.com/emerald.png"
-    //   price: 29.99,
-    //   color: "#2ECC71",
-    //   popular: false,
-    //   description: "Your description here.",
-    //   features: ["Perk 1", "Perk 2", "Perk 3"],
-    // },
+    // ── Add more ranks: copy a block above, paste here, edit values ──
+  ],
+
+  // ── Crates ─────────────────────────────────────────────────
+  // icon: emoji OR image URL
+  // color: hex accent color
+  // items: array of possible loot shown as tags
+  // price: set to 0 to display "Free"
+  crates: [
+    {
+      id: "vote",
+      name: "Vote Crate",
+      icon: "📦",
+      price: 0,
+      color: "#6ec87a",
+      description: "Earned by voting for the server. One key per vote.",
+      items: ["Iron Ingots", "Gold Ingots", "Diamonds", "XP Bottles", "Enchanted Books"],
+    },
+    {
+      id: "rare",
+      name: "Rare Crate",
+      icon: "🔮",
+      price: 2.99,
+      color: "#a97ee6",
+      description: "Better odds, better loot. Includes exclusive enchants.",
+      items: ["Diamond Gear", "Netherite Scrap", "Custom Enchants", "Spawner Shards", "Rare Keys"],
+    },
+    {
+      id: "legendary",
+      name: "Legendary Crate",
+      icon: "⚡",
+      price: 5.99,
+      color: "#e8c44a",
+      description: "Top-tier drops. Spawners, custom items, and cosmetics.",
+      items: ["Spawners", "Custom Weapons", "Fly Time", "Cosmetic Trails", "Rank Upgrades", "Elytras"],
+    },
+    // ── Add more crates: copy a block above, paste here, edit values ──
   ],
 };
+
 // ═══════════════════════════════════════════════════════════════════
 
 
-// ── RENDER ──────────────────────────────────────────────────────
-(function init() {
-  document.getElementById("navServerName").textContent = STORE_CONFIG.serverName;
-  document.getElementById("navSeason").textContent = STORE_CONFIG.season;
-  document.getElementById("heroTagline").textContent = STORE_CONFIG.tagline;
-  document.getElementById("navDiscord").href = STORE_CONFIG.discordLink;
-  document.getElementById("footerCopy").textContent = `© ${new Date().getFullYear()} ${STORE_CONFIG.serverName}.`;
+(function() {
+  document.getElementById("navName").textContent = CONFIG.serverName;
+  document.getElementById("navTag").textContent = CONFIG.season;
+  document.getElementById("discordLink").href = CONFIG.discordLink;
+  document.getElementById("heroEyebrow").textContent = CONFIG.serverName + " · " + CONFIG.season;
+  document.getElementById("heroTitle").innerHTML = CONFIG.heroTitle;
+  document.getElementById("heroSub").textContent = CONFIG.heroSub;
+  document.getElementById("footerText").textContent = "© " + new Date().getFullYear() + " " + CONFIG.serverName;
 
-  const grid = document.getElementById("cardsGrid");
-  STORE_CONFIG.ranks.forEach((rank) => {
-    grid.appendChild(createRankCard(rank));
+  var rg = document.getElementById("ranksGrid");
+  CONFIG.ranks.forEach(function(r, i) { rg.appendChild(mkRank(r, i)); });
+
+  var cg = document.getElementById("cratesGrid");
+  CONFIG.crates.forEach(function(c, i) { cg.appendChild(mkCrate(c, i)); });
+
+  // Tabs
+  var tabs = document.querySelectorAll(".section-tab");
+  var navLinks = document.querySelectorAll(".topbar-links a[data-tab]");
+  var rs = document.getElementById("ranksSection");
+  var cs = document.getElementById("cratesSection");
+
+  function go(s) {
+    tabs.forEach(function(t) { t.classList.toggle("active", t.dataset.section === s); });
+    navLinks.forEach(function(l) { l.classList.toggle("active", l.dataset.tab === s); });
+    rs.style.display = s === "ranks" ? "" : "none";
+    cs.style.display = s === "crates" ? "" : "none";
+    var cards = document.querySelectorAll(s === "ranks" ? ".rank-card" : ".crate-card");
+    cards.forEach(function(c, i) {
+      c.style.animation = "none"; c.offsetHeight;
+      c.style.animation = ""; c.style.animationDelay = (i * 0.07) + "s";
+    });
+  }
+  tabs.forEach(function(t) { t.onclick = function() { go(t.dataset.section); }; });
+  navLinks.forEach(function(l) {
+    l.onclick = function(e) { if (l.dataset.tab) { e.preventDefault(); go(l.dataset.tab); } };
   });
-
-  initParticles();
 })();
 
-function createRankCard(rank) {
-  const card = document.createElement("div");
-  card.className = "rank-card" + (rank.popular ? " is-popular" : "");
-  card.style.setProperty("--accent", rank.color);
-  card.style.setProperty("--accent-cc", rank.color + "CC");
-  card.style.setProperty("--accent-dim", rank.color + "88");
-  card.style.setProperty("--accent-shadow", rank.color + "44");
-  card.style.setProperty("--accent-alpha", rank.color + "88");
-
-  const isUrl = rank.icon.startsWith("http");
-  const iconHTML = isUrl
-    ? `<img src="${rank.icon}" alt="${rank.name}" style="width:48px;height:48px;object-fit:contain;">`
-    : rank.icon;
-
-  const featuresHTML = rank.features
-    .map(f => `<div class="feature-item"><span class="feature-dot">✦</span>${f}</div>`)
-    .join("");
-
-  const btnClass = rank.popular ? "filled" : "outline";
-
-  card.innerHTML = `
-    ${rank.popular ? '<div class="popular-badge">Popular</div>' : ''}
-    <div class="card-glow"></div>
-    <div class="card-header">
-      <div class="card-icon">${iconHTML}</div>
-      <h3 class="card-name">${rank.name}</h3>
-      <p class="card-desc">${rank.description}</p>
-    </div>
-    <div class="card-price">
-      <span class="price-amount">$${rank.price.toFixed(2)}</span>
-      <span class="price-currency">USD</span>
-    </div>
-    <div class="card-divider"></div>
-    <div class="card-features">${featuresHTML}</div>
-    <div class="card-btn-wrap">
-      <button class="card-btn ${btnClass}">Purchase Rank</button>
-    </div>
-  `;
-
-  return card;
+function mkRank(r, i) {
+  var d = document.createElement("div");
+  d.className = "rank-card fade-in";
+  d.style.animationDelay = (i * 0.07) + "s";
+  d.style.setProperty("--card-accent", r.color);
+  var ic = (r.icon.indexOf && r.icon.indexOf("http") === 0)
+    ? '<img src="'+r.icon+'" alt="'+r.name+'">' : r.icon;
+  var fl = ""; r.features.forEach(function(f) { fl += '<div class="rank-feat">'+f+'</div>'; });
+  d.innerHTML =
+    '<div class="rank-card-top"></div><div class="rank-card-body">'+
+    '<div class="rank-header"><div class="rank-icon">'+ic+'</div>'+
+    '<div class="rank-name">'+r.name+'</div>'+
+    (r.popular?'<span class="rank-pop">Popular</span>':'')+
+    '</div><div class="rank-desc">'+r.description+'</div>'+
+    '<div class="rank-features">'+fl+'</div>'+
+    '<div class="rank-bottom"><div class="rank-price">$'+r.price.toFixed(2)+
+    '<small>USD</small></div><button class="rank-buy '+(r.popular?'filled':'ghost')+
+    '">Purchase</button></div></div>';
+  return d;
 }
 
-// ── PARTICLES ──────────────────────────────────────────────────
-function initParticles() {
-  const canvas = document.getElementById("particles");
-  const ctx = canvas.getContext("2d");
-  let particles = [];
-
-  function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener("resize", resize);
-
-  for (let i = 0; i < 60; i++) {
-    particles.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      size: Math.random() * 2 + 0.5,
-      speedY: -(Math.random() * 0.3 + 0.1),
-      speedX: (Math.random() - 0.5) * 0.2,
-      opacity: Math.random() * 0.5 + 0.1,
-    });
-  }
-
-  function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => {
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(79, 195, 247, ${p.opacity})`;
-      ctx.fill();
-      p.x += p.speedX;
-      p.y += p.speedY;
-      if (p.y < -10) {
-        p.y = canvas.height + 10;
-        p.x = Math.random() * canvas.width;
-      }
-    });
-    requestAnimationFrame(draw);
-  }
-  draw();
+function mkCrate(c, i) {
+  var d = document.createElement("div");
+  d.className = "crate-card fade-in";
+  d.style.animationDelay = (i * 0.07) + "s";
+  d.style.setProperty("--crate-color", c.color);
+  var ic = (c.icon.indexOf && c.icon.indexOf("http") === 0)
+    ? '<img src="'+c.icon+'" alt="'+c.name+'">' : c.icon;
+  var il = ""; c.items.forEach(function(t) { il += '<span class="crate-item">'+t+'</span>'; });
+  var pr = c.price === 0 ? "Free" : "$"+c.price.toFixed(2)+"<small>USD</small>";
+  d.innerHTML =
+    '<div class="crate-top-row"><div class="crate-icon">'+ic+'</div>'+
+    '<div class="crate-name">'+c.name+'</div></div>'+
+    '<div class="crate-desc">'+c.description+'</div>'+
+    '<div class="crate-loot-label">Possible Loot</div>'+
+    '<div class="crate-items">'+il+'</div>'+
+    '<div class="crate-bottom"><div class="crate-price">'+pr+'</div>'+
+    (c.price>0?'<button class="crate-buy">Buy Key</button>':'')+
+    '</div>';
+  return d;
 }
 </script>
 </body>
